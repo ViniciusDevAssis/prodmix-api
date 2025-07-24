@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_organizations")
-public class Organization {
+@Table(name = "tb_stores")
+public class Store {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,10 +23,10 @@ public class Organization {
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
 
-    public Organization() {
+    public Store() {
     }
 
-    public Organization(Long id, String name, String email, String password, String logoUrl, Status status) {
+    public Store(Long id, String name, String email, String password, String logoUrl, Status status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -90,7 +90,7 @@ public class Organization {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Organization that = (Organization) o;
+        Store that = (Store) o;
         return Objects.equals(id, that.id);
     }
 

@@ -1,15 +1,22 @@
 package com.prodmix.api.dtos;
 
-public class UpdateOrganizationDto {
+import jakarta.validation.constraints.NotBlank;
 
+public class CreateStoreDto {
+
+    @NotBlank(message = "O campo nome é obrigatório")
     private String name;
+
+    @NotBlank(message = "O campo email é obrigatório")
     private String email;
+
+    @NotBlank(message = "O campo senha é obrigatório")
     private String password;
 
-    public UpdateOrganizationDto() {
+    public CreateStoreDto() {
     }
 
-    public UpdateOrganizationDto(String name, String email, String password) {
+    public CreateStoreDto(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
