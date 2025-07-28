@@ -4,13 +4,13 @@ import com.prodmix.api.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_stores")
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -29,4 +29,16 @@ public class Store {
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "store")
+    private List<Product> products = new ArrayList<>();
+
+    public Store(Long id, String name, String email, String password, String logoUrl, Status status) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.logoUrl = logoUrl;
+        this.status = status;
+    }
 }

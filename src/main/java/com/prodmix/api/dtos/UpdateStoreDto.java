@@ -3,7 +3,7 @@ package com.prodmix.api.dtos;
 import lombok.*;
 
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class UpdateStoreDto {
