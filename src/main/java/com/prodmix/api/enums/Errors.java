@@ -3,7 +3,8 @@ package com.prodmix.api.enums;
 public enum Errors {
 
     // PSE1XX for store entity errors
-    PSE101("PSE101", "No store found with the given id");
+    PSE101("PSE101", "No Store found with the given id"),
+    PSE102("PSE102", "No Store found with the given email");
 
     private final String code;
     private final String message;

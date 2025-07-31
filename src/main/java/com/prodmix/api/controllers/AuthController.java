@@ -1,10 +1,12 @@
 package com.prodmix.api.controllers;
 
+import com.prodmix.api.controllers.advice.exceptions.StoreEmailNotFoundException;
 import com.prodmix.api.dtos.CreateStoreDto;
 import com.prodmix.api.dtos.LoginDto;
 import com.prodmix.api.dtos.ResponseDto;
 import com.prodmix.api.dtos.ResponseStoreDto;
 import com.prodmix.api.entities.Store;
+import com.prodmix.api.enums.Errors;
 import com.prodmix.api.mappers.StoreMapper;
 import com.prodmix.api.repositories.StoreRepository;
 import com.prodmix.api.security.TokenService;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,10 +36,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginDto body) {
-        Optional<Store> store = this.repository.findByEmail(body.email());
-        if (encoder.matches(body.password(), store.get().getPassword())) {
-            String token = this.tokenService.generateToken(store.orElse(null));
-            return ResponseEntity.ok(new ResponseDto(store.get().getName(), token));
+        Store store = this.repository.findByEmail(body.email()).orElseThrow(
+                () -> new StoreEmailNotFoundException(Errors.PSE102)
+        );
+        if (encoder.matches(body.password(), store.getPassword())) {
+            String token = this.tokenService.generateToken(store);
+            return ResponseEntity.ok(new ResponseDto(store.getName(), token));
         }
         return ResponseEntity.badRequest().build();
     }
