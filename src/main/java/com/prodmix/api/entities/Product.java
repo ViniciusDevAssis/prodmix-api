@@ -5,8 +5,6 @@ import com.prodmix.api.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "tb_products")
 @NoArgsConstructor

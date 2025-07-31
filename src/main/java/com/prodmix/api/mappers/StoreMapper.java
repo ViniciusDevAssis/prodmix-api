@@ -5,7 +5,6 @@ import com.prodmix.api.dtos.ResponseStoreDto;
 import com.prodmix.api.dtos.UpdateStoreDto;
 import com.prodmix.api.entities.Store;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 
