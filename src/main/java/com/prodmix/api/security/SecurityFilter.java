@@ -1,6 +1,8 @@
 package com.prodmix.api.security;
 
+import com.prodmix.api.controllers.advice.exceptions.StoreEmailNotFoundException;
 import com.prodmix.api.entities.Store;
+import com.prodmix.api.enums.Errors;
 import com.prodmix.api.repositories.StoreRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -34,7 +36,9 @@ public class SecurityFilter extends OncePerRequestFilter {
         var login = service.validateToken(token);
 
         if (login != null) {
-            Optional<Store> store = repository.findByEmail(login);
+            Store store = repository.findByEmail(login).orElseThrow(
+                () -> new StoreEmailNotFoundException(Errors.PSE102)
+            );
             var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
             var authentication = new UsernamePasswordAuthenticationToken(store,
                     null,

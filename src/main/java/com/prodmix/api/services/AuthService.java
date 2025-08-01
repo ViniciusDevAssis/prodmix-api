@@ -7,6 +7,9 @@ import com.prodmix.api.mappers.StoreMapper;
 import com.prodmix.api.repositories.StoreRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,5 +24,17 @@ public class AuthService {
         Store store = mapper.createStoreDTOToStore(dto);
         Store savedStore = repository.save(store);
         return mapper.storeToResponseStoreDTO(savedStore);
+    }
+
+    public Long getStoreIdFromToken() {
+        Object principal = SecurityContextHolder
+        .getContext()
+        .getAuthentication()
+        .getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((Store) principal).getId();
+        } else {
+            return Long.parseLong(principal.toString());
+        }
     }
 }
