@@ -1,5 +1,6 @@
 package com.prodmix.api.controllers.advice;
 
+import com.prodmix.api.controllers.advice.exceptions.ProductDescriptionNotFoundException;
 import com.prodmix.api.controllers.advice.exceptions.StoreEmailNotFoundException;
 import com.prodmix.api.controllers.advice.exceptions.StoreIdNotFoundException;
 import com.prodmix.api.controllers.advice.responses.ErrorResponse;
@@ -28,7 +29,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(StoreEmailNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleStoreEmailNotFoundException(
-            StoreIdNotFoundException ex,
+            StoreEmailNotFoundException ex,
+            WebRequest request
+    ) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                ex.getErrorCode(),
+                null
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ProductDescriptionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleProductDescriptionNotFoundException(
+            ProductDescriptionNotFoundException ex,
             WebRequest request
     ) {
         ErrorResponse error = new ErrorResponse(

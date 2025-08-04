@@ -22,12 +22,17 @@ public class StoreService {
     private final AuthService auth;
     private final StoreMapper mapper;
 
-    @Transactional
-    public ResponseStoreDto updateStore(UpdateStoreDto body) {
+    protected Store findStoreById() {
         Long id = auth.getStoreIdFromToken();
         Store store = repository.findById(id).orElseThrow(
             () -> new StoreIdNotFoundException(Errors.PSE101)
         );
+        return store;
+    }
+
+    @Transactional
+    public ResponseStoreDto updateStore(UpdateStoreDto body) {
+        Store store = findStoreById();
 
         store.setName(
             body.getName() != null && !body.getName().isBlank()
@@ -52,10 +57,7 @@ public class StoreService {
 
     @Transactional
     public void toggleStoreStatus(){
-        Long id = auth.getStoreIdFromToken();
-        Store store = repository.findById(id).orElseThrow(
-            () -> new StoreIdNotFoundException(Errors.PSE101)
-        );
+        Store store = findStoreById();
 
         if (store.getStatus() == Status.ACTIVE) {
             store.setStatus(Status.INACTIVE);

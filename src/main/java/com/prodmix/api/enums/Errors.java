@@ -4,7 +4,10 @@ public enum Errors {
 
     // PSE1XX for store entity errors
     PSE101("PSE101", "No Store found with the given id"),
-    PSE102("PSE102", "No Store found with the given email");
+    PSE102("PSE102", "No Store found with the given email"),
+
+    // PPE2XX for product entity errors
+    PPE201("PPE201", "No Product found with the given description");
 
     private final String code;
     private final String message;

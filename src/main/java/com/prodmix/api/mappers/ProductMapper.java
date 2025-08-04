@@ -14,7 +14,7 @@ public interface ProductMapper {
 
     //Para uma única Product
     CreateProductDto productToCreateProductDto(Product product);
-    Product createProductDtoProduct(CreateProductDto dto);
+    Product createProductDtoToProduct(CreateProductDto dto);
     ResponseProductDto productToResponseProductDto(Product product);
     Product responseProductDtoToProduct(ResponseProductDto dto);
     UpdateProductDto productToUpdateProductDto(Product product);
