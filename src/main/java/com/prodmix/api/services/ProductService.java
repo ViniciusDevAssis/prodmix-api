@@ -2,6 +2,7 @@ package com.prodmix.api.services;
 
 import java.util.List;
 
+import com.prodmix.api.enums.Status;
 import org.springframework.stereotype.Service;
 
 import com.prodmix.api.controllers.advice.exceptions.ProductDescriptionNotFoundException;
@@ -55,6 +56,19 @@ public class ProductService {
         Product updatedProduct = repository.save(product);
         return mapper.productToResponseProductDto(updatedProduct);
 
+    }
+
+    @Transactional
+    public void toggleProductStatus(String description) {
+        Product product = getProductByDescription(description);
+
+        if (product.getStatus() == Status.ACTIVE) {
+            product.setStatus(Status.INACTIVE);
+            repository.save(product);
+        } else {
+            product.setStatus(Status.ACTIVE);
+            repository.save(product);
+        }
     }
 
     private List<Product> getProductsByStore() {

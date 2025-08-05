@@ -3,6 +3,7 @@ package com.prodmix.api.mappers;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.prodmix.api.dtos.CreateProductDto;
 import com.prodmix.api.dtos.ResponseProductDto;
@@ -15,6 +16,8 @@ public interface ProductMapper {
     //Para uma única Product
     CreateProductDto productToCreateProductDto(Product product);
     Product createProductDtoToProduct(CreateProductDto dto);
+
+    @Mapping(source = "id", target = "id")
     ResponseProductDto productToResponseProductDto(Product product);
     Product responseProductDtoToProduct(ResponseProductDto dto);
     UpdateProductDto productToUpdateProductDto(Product product);
