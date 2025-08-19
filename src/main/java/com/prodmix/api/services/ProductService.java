@@ -1,6 +1,7 @@
 package com.prodmix.api.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.prodmix.api.enums.Status;
 import org.springframework.stereotype.Service;
@@ -79,12 +80,20 @@ public class ProductService {
     private Product getProductByDescription(String description) {
         List<Product> products = getProductsByStore();
 
-        Product product = products.stream().filter(
+        return products.stream().filter(
             p -> p.getDescription().equalsIgnoreCase(description)
         ).findFirst().orElseThrow(
             () -> new ProductDescriptionNotFoundException(Errors.PPE201)
         );
-        
-        return product;
+    }
+
+    public List<ResponseProductDto> listActiveProducts() {
+        List<Product> products = getProductsByStore();
+
+        List<Product> activeProducts = products.stream()
+                .filter(p -> p.getStatus() == Status.ACTIVE)
+                .collect(Collectors.toList());
+
+        return mapper.productsToListDto(activeProducts);
     }
 }

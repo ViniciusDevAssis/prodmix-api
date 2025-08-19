@@ -1,6 +1,7 @@
 package com.prodmix.api.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import com.prodmix.api.dtos.CreateProductDto;
 import com.prodmix.api.dtos.ResponseProductDto;
@@ -44,5 +45,10 @@ public class ProductController {
     public ResponseEntity<Void> toggleProductStatus(@RequestParam String description){
         service.toggleProductStatus(description);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ResponseProductDto>> listActiveProducts() {
+        return ResponseEntity.ok(service.listActiveProducts());
     }
 }
