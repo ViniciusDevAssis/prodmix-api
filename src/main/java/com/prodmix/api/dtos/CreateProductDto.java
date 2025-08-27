@@ -3,6 +3,7 @@ package com.prodmix.api.dtos;
 import com.prodmix.api.enums.Category;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class CreateProductDto {
 
     private String logoUrl;
 
-    @NotBlank(message = "O Campo categoria é obrigatório")
+    @NotNull(message = "O Campo categoria é obrigatório")
     private Category category;
 
 }

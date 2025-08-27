@@ -16,6 +16,8 @@ public interface ProductMapper {
     //Para uma única Product
     CreateProductDto productToCreateProductDto(Product product);
     Product createProductDtoToProduct(CreateProductDto dto);
+
+    @Mapping(target = "description", source = "description")
     ResponseProductDto productToResponseProductDto(Product product);
     Product responseProductDtoToProduct(ResponseProductDto dto);
     UpdateProductDto productToUpdateProductDto(Product product);

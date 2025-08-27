@@ -51,8 +51,8 @@ public class AuthController {
             @Valid @RequestBody CreateStoreDto body
     ) {
         body.setPassword(encoder.encode(body.getPassword()));
-        ResponseStoreDto store = service.register(body);
-        Store registeredStore = mapper.responseStoreDTOToStore(store);
+        ResponseDto store = service.register(body);
+        Store registeredStore = mapper.responseDTOToStore(store);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/stores/{slug}")
                 .buildAndExpand(registeredStore.getSlug()).toUri();

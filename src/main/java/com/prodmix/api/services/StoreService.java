@@ -1,5 +1,6 @@
 package com.prodmix.api.services;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.prodmix.api.controllers.advice.exceptions.StoreIdNotFoundException;
@@ -21,13 +22,13 @@ public class StoreService {
     private final StoreRepository repository;
     private final AuthService auth;
     private final StoreMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
     protected Store findStoreById() {
         Long id = auth.getStoreIdFromToken();
-        Store store = repository.findById(id).orElseThrow(
+        return repository.findById(id).orElseThrow(
             () -> new StoreIdNotFoundException(Errors.PSE101)
         );
-        return store;
     }
 
     @Transactional
@@ -44,7 +45,7 @@ public class StoreService {
         );
         store.setPassword(
             body.getPassword() != null && !body.getPassword().isBlank()
-            ? body.getPassword() : store.getPassword()
+            ? passwordEncoder.encode(body.getPassword()) : store.getPassword()
         );
         store.setLogoUrl(
             body.getLogoUrl() != null && !body.getLogoUrl().isBlank()
